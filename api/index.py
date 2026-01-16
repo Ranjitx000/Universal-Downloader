@@ -32,11 +32,11 @@ executor = ThreadPoolExecutor(max_workers=3)
 
 def get_ffmpeg_path():
     """Locate FFmpeg binary on the system (Linux/Windows)."""
-    return shutil.which('ffmpeg')
+    return "ffmpeg"
 
 def get_ffprobe_path():
     """Locate FFprobe binary on the system."""
-    return shutil.which('ffprobe')
+    return "ffprobe"
 
 def analyze_media(filepath):
     """Returns dict of media info: container, video_codec, audio_codec."""
