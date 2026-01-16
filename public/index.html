@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universal Video Downloader</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="spline-container">
+        <iframe src="https://my.spline.design/spaceparticlesanimation-UGnU6SB7nUK6sFI6N5WzasEx" frameborder="0" width="100%" height="100%" id="aura-spline"></iframe>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="app-navbar">
+        <div class="nav-logo">
+            <span class="nav-logo-icon">⬇</span>
+            <span class="nav-logo-text">UniLoad</span>
+        </div>
+        <div class="nav-links">
+            <a href="#" class="nav-item active">
+                <img src="icons/youtube.png" class="nav-icon-img" alt="YouTube">
+                <span class="nav-text">YouTube</span>
+            </a>
+            <a href="#" class="nav-item">
+                <img src="icons/instagram.png" class="nav-icon-img" alt="Instagram">
+                <span class="nav-text">Instagram</span>
+            </a>
+            <a href="#" class="nav-item">
+                <img src="icons/facebook.png" class="nav-icon-img" alt="Facebook">
+                <span class="nav-text">Facebook</span>
+            </a>
+            <a href="#" class="nav-item">
+                <img src="icons/spotify.png" class="nav-icon-img" alt="Spotify">
+                <span class="nav-text">Spotify</span>
+            </a>
+        </div>
+        <div class="nav-actions">
+            <button class="nav-btn">Get App</button>
+        </div>
+    </nav>
+
+    <main class="glass-container">
+        <header>
+            <div class="brand-badge">BETA v2.0</div>
+            <h1>Universal <span class="highlight">Downloader</span></h1>
+            <p>Paste a link from YouTube or Instagram to get started</p>
+        </header>
+
+        <!-- How It Works Animated Card -->
+        <section class="hiw-card">
+            <div class="hiw-header">
+                <h2>How It Works</h2>
+                <p>Download media in 4 simple steps</p>
+            </div>
+            
+            <div class="hiw-timeline-container">
+                <div class="hiw-line">
+                    <div class="hiw-line-fill"></div>
+                </div>
+                
+                <div class="hiw-step step-1">
+                    <div class="hiw-icon-wrapper">
+                        <span class="hiw-icon">🔗</span>
+                    </div>
+                    <div class="hiw-text">
+                        <h3>Paste Link</h3>
+                        <p>YouTube, FB, or Spotify</p>
+                    </div>
+                </div>
+
+                <div class="hiw-step step-2">
+                    <div class="hiw-icon-wrapper">
+                        <span class="hiw-icon">🎚️</span>
+                    </div>
+                    <div class="hiw-text">
+                        <h3>Format</h3>
+                        <p>Video or MP3 Audio</p>
+                    </div>
+                </div>
+
+                <div class="hiw-step step-3">
+                    <div class="hiw-icon-wrapper">
+                        <span class="hiw-icon spinning-gear">⚙️</span>
+                    </div>
+                    <div class="hiw-text">
+                        <h3>Processing</h3>
+                        <p>Auto-fix & Optimize</p>
+                    </div>
+                </div>
+
+                <div class="hiw-step step-4">
+                    <div class="hiw-icon-wrapper">
+                        <span class="hiw-icon download-bounce">⬇</span>
+                        <div class="hiw-check">✓</div>
+                    </div>
+                    <div class="hiw-text">
+                        <h3>Download</h3>
+                        <p>Ready to save</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hiw-footer">
+                <p>💡 <b>Tip:</b> Spotify links use YouTube-matched audio for best quality</p>
+            </div>
+        </section>
+
+        <section class="controls-area">
+            <div class="input-wrapper">
+                <div class="platform-icon" id="platform-icon">
+                    <span id="platform-icon-emoji">🔗</span>
+                    <img id="platform-icon-img" class="hidden" src="" alt="Platform">
+                </div>
+                <input type="text" id="urlInput" placeholder="https://..." autocomplete="off">
+            </div>
+
+            <div class="options-grid">
+                <div class="select-wrapper">
+                    <label>Format</label>
+                    <select id="formatSelect">
+                        <option value="video">Video (MP4)</option>
+                        <option value="audio">Audio (MP3)</option>
+                    </select>
+                </div>
+                <div class="select-wrapper">
+                    <label>Quality</label>
+                    <select id="qualitySelect">
+                        <option value="720">720p (HD)</option>
+                        <option value="360">360p (Data Saver)</option>
+                    </select>
+                </div>
+                <button id="downloadBtn">Download</button>
+            </div>
+        </section>
+
+        <!-- Status & Progress -->
+        <div id="status-container" class="status-card hidden">
+            <div class="status-header">
+                <span id="status-text">Initializing...</span>
+                <span id="progress-percent">0%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+
+        <div id="error-msg" class="error-card hidden"></div>
+
+        <!-- Result Card -->
+        <div id="result-card" class="result-card hidden">
+            <div class="media-preview">
+                <img id="thumbnail" src="" alt="Thumbnail">
+                <div class="play-icon">▶</div>
+            </div>
+            
+            <div class="media-info">
+                <h2 id="video-title">Video Title</h2>
+                <div class="meta-tags">
+                    <span id="uploader" class="tag">Channel</span>
+                    <span id="file-size" class="tag">Size: --</span>
+                </div>
+                
+                <div class="health-report" id="health-report">
+                    <div class="health-item">
+                        <span class="icon">📦</span>
+                        <span class="label">Format</span>
+                        <span class="value" id="health-container">MP4</span>
+                    </div>
+                    <div class="health-item">
+                        <span class="icon">🎬</span>
+                        <span class="label">Video</span>
+                        <span class="value" id="health-video">H.264</span>
+                    </div>
+                    <div class="health-item">
+                        <span class="icon">🎵</span>
+                        <span class="label">Audio</span>
+                        <span class="value" id="health-audio">AAC</span>
+                    </div>
+                </div>
+
+                <a id="download-link" href="#" class="primary-action">
+                    <span class="btn-icon">⬇</span> Save File
+                </a>
+            </div>
+        </div>
+
+        <!-- Recent History -->
+        <div id="history-section" class="history-card hidden">
+            <div class="history-header">
+                <h3>Recent Downloads</h3>
+                <button id="clearHistoryBtn" class="sm-btn">Clear</button>
+            </div>
+            <ul id="history-list">
+                <!-- Items injected here -->
+            </ul>
+        </div>
+
+        <!-- Supported Platforms Card -->
+        <section class="platforms-card">
+            <div class="platforms-header">
+                <h3>Supported Platforms</h3>
+                <p>Download video & audio from popular platforms</p>
+            </div>
+            <div class="platforms-grid">
+                <!-- YouTube -->
+                <div class="platform-tile">
+                    <div class="tile-icon yt-color">
+                        <img src="icons/youtube.png" class="tile-icon-img" alt="YouTube">
+                    </div>
+                    <div class="tile-content">
+                        <h4>YouTube</h4>
+                        <span class="tile-label">Video (H.264) + MP3</span>
+                    </div>
+                </div>
+                <!-- Instagram -->
+                <div class="platform-tile">
+                    <div class="tile-icon ig-color">
+                        <img src="icons/instagram.png" class="tile-icon-img" alt="Instagram">
+                    </div>
+                    <div class="tile-content">
+                        <h4>Instagram</h4>
+                        <span class="tile-label">Reels, Posts, Stories</span>
+                    </div>
+                </div>
+                <!-- Facebook -->
+                <div class="platform-tile">
+                    <div class="tile-icon fb-color">
+                        <img src="icons/facebook.png" class="tile-icon-img" alt="Facebook">
+                    </div>
+                    <div class="tile-content">
+                        <h4>Facebook</h4>
+                        <span class="tile-label">Public Videos & Watch</span>
+                    </div>
+                </div>
+                <!-- Spotify -->
+                <div class="platform-tile">
+                    <div class="tile-icon sp-color">
+                        <img src="icons/spotify.png" class="tile-icon-img" alt="Spotify">
+                    </div>
+                    <div class="tile-content">
+                        <h4>Spotify</h4>
+                        <span class="tile-label">Audio (Smart Match)</span>
+                    </div>
+                </div>
+            </div>
+            <div class="platforms-footer">
+                <p>✨ More platforms coming soon</p>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
