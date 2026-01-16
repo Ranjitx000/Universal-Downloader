@@ -32,11 +32,11 @@ executor = ThreadPoolExecutor(max_workers=3)
 
 def get_ffmpeg_path():
     """Locate FFmpeg binary on the system (Linux/Windows)."""
-    return "ffmpeg"
+    return shutil.which("ffmpeg")
 
 def get_ffprobe_path():
     """Locate FFprobe binary on the system."""
-    return "ffprobe"
+    return shutil.which("ffprobe")
 
 def analyze_media(filepath):
     """Returns dict of media info: container, video_codec, audio_codec."""
@@ -277,6 +277,13 @@ def background_download_task(job_id, url, quality, mode):
              err_msg = "Private video or login required. Cannot download."
         jobs[job_id]['status'] = 'error'
         jobs[job_id]['error'] = err_msg
+
+@api_bp.route("/debug/ffmpeg")
+def debug_ffmpeg():
+    return {
+        "ffmpeg": get_ffmpeg_path(),
+        "ffprobe": get_ffprobe_path()
+    }
 
 # --- Routes ---
 
