@@ -1,2 +1,11 @@
 [phases.setup]
 nixPkgs = ["ffmpeg"]
+
+[phases.install]
+cmds = ["python -m pip install -r requirements.txt"]
+
+[start]
+cmd = "gunicorn app:app --workers 1 --threads 4"
+
+[providers]
+python = "3.11"

@@ -1,6 +1,6 @@
-flask
-flask-cors
-yt-dlp
-requests
-imageio-ffmpeg
-beautifulsoup4
+flask==3.0.0
+flask-cors==4.0.0
+yt-dlp>=2023.10.13
+requests==2.31.0
+beautifulsoup4==4.12.2
+gunicorn==21.2.0
