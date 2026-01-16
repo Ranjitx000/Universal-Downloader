@@ -5,7 +5,7 @@ nixPkgs = ["ffmpeg"]
 cmds = ["python -m pip install -r requirements.txt"]
 
 [start]
-cmd = "gunicorn app:app --workers 1 --threads 4"
+cmd = "gunicorn app:app --workers 1 --threads 4 --bind 0.0.0.0:$PORT"
 
 [providers]
 python = "3.11"
