@@ -31,40 +31,10 @@ jobs = {}
 executor = ThreadPoolExecutor(max_workers=3)
 
 def get_ffmpeg_path():
-    """Locate FFmpeg binary on the system (Linux/Windows)."""
-    # 1. Try PATH
-    path = shutil.which("ffmpeg")
-    if path: return path
-    
-    # 2. Try Common Unix Paths
-    common_paths = [
-        "/usr/bin/ffmpeg", 
-        "/usr/local/bin/ffmpeg", 
-        "/bin/ffmpeg"
-    ]
-    for p in common_paths:
-        if os.path.exists(p) and os.access(p, os.X_OK):
-            return p
-            
-    return None
+    return shutil.which("ffmpeg")
 
 def get_ffprobe_path():
-    """Locate FFprobe binary on the system."""
-    # 1. Try PATH
-    path = shutil.which("ffprobe")
-    if path: return path
-    
-    # 2. Try Common Unix Paths
-    common_paths = [
-        "/usr/bin/ffprobe", 
-        "/usr/local/bin/ffprobe", 
-        "/bin/ffprobe"
-    ]
-    for p in common_paths:
-        if os.path.exists(p) and os.access(p, os.X_OK):
-            return p
-            
-    return None
+    return shutil.which("ffprobe")
 
 def analyze_media(filepath):
     """Returns dict of media info: container, video_codec, audio_codec."""
@@ -306,15 +276,11 @@ def background_download_task(job_id, url, quality, mode):
         jobs[job_id]['status'] = 'error'
         jobs[job_id]['error'] = err_msg
 
-@api_bp.route("/debug/ffmpeg")
+@api_bp.route("/debug/ffmpeg", methods=["GET"])
 def debug_ffmpeg():
     return {
         "ffmpeg": get_ffmpeg_path(),
-        "ffprobe": get_ffprobe_path(),
-        "path_env": os.environ.get("PATH", "No PATH"),
-        "dirs_checked": ["/usr/bin", "/usr/local/bin"],
-        "files_in_usr_bin_ffmpeg": [f for f in os.listdir("/usr/bin") if "ffmpeg" in f] if os.path.exists("/usr/bin") else [],
-        "cwd": os.getcwd()
+        "ffprobe": get_ffprobe_path()
     }
 
 # --- Routes ---
