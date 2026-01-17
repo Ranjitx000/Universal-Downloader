@@ -31,10 +31,60 @@ jobs = {}
 executor = ThreadPoolExecutor(max_workers=3)
 
 def get_ffmpeg_path():
-    return shutil.which("ffmpeg")
+    # 1. Try PATH
+    path = shutil.which("ffmpeg")
+    if path:
+        return path
+    
+    # 2. Try Standard Linux Paths
+    common_paths = [
+        "/usr/bin/ffmpeg",
+        "/usr/local/bin/ffmpeg",
+        "/bin/ffmpeg",
+    ]
+    for p in common_paths:
+        if os.path.isfile(p) and os.access(p, os.X_OK):
+            return p
+            
+    # 3. Try Local (relative to cwd or script)
+    local_paths = [
+        os.path.join(os.getcwd(), "ffmpeg"),
+        os.path.join(os.getcwd(), "ffmpeg.exe"),
+    ]
+    for p in local_paths:
+        if os.path.isfile(p) and os.access(p, os.X_OK):
+            return p
+            
+    # Not found
+    logger.error(f"FFmpeg not found. PATH: {os.environ.get('PATH')}")
+    return None
 
 def get_ffprobe_path():
-    return shutil.which("ffprobe")
+    # 1. Try PATH
+    path = shutil.which("ffprobe")
+    if path:
+        return path
+    
+    # 2. Try Standard Linux Paths
+    common_paths = [
+        "/usr/bin/ffprobe",
+        "/usr/local/bin/ffprobe",
+        "/bin/ffprobe",
+    ]
+    for p in common_paths:
+        if os.path.isfile(p) and os.access(p, os.X_OK):
+            return p
+            
+    # 3. Try Local (relative to cwd or script)
+    local_paths = [
+        os.path.join(os.getcwd(), "ffprobe"),
+        os.path.join(os.getcwd(), "ffprobe.exe"),
+    ]
+    for p in local_paths:
+        if os.path.isfile(p) and os.access(p, os.X_OK):
+            return p
+
+    return None
 
 def analyze_media(filepath):
     """Returns dict of media info: container, video_codec, audio_codec."""
